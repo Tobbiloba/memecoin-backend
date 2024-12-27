@@ -6,12 +6,17 @@ import {
 } from "../utils/scrapeTokenDetails";
 import { addTokenDetails } from "../models/tokenDetail.model";
 import { addTokenMetrics } from "../models/tokenMetric";
+import path from "path"
+
+const chromePath = path.join(__dirname, '../../chrome/chrome'); // Adjust if needed
+
 export const getTokenController = async (req: Request, res: Response) => {
   try {
     const { contract } = req.params;
     const browser = await puppeteer.launch({
+      executablePath: chromePath, // Explicitly specify the Chrome path
       headless: true,
-      args: ["--no-sandbox"],
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
     const page = await browser.newPage();
 

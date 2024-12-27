@@ -1,2 +1,3 @@
 node_modules
-.envchrome/chrome
+.env
+chrome/chrome

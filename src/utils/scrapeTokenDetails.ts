@@ -1,4 +1,7 @@
 import puppeteer from "puppeteer";
+import path from "path"
+
+const chromePath = path.join(__dirname, '../../chrome/chrome'); // Adjust if needed
 
 const scrapeTokenDetails = async (page: any, contract: string) => {
   console.log("scraping token details:", contract);
@@ -6,7 +9,9 @@ const scrapeTokenDetails = async (page: any, contract: string) => {
     // Configure Puppeteer to run without sandbox
     if (!page) {
       const browser = await puppeteer.launch({
-        headless: true
+        executablePath: chromePath, // Explicitly specify the Chrome path
+headless: true,
+args: ['--no-sandbox', '--disable-setuid-sandbox'],
       });
       page = await browser.newPage();
     }

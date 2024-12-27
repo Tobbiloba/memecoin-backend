@@ -5,13 +5,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.scrapeTokenMetrics = exports.scrapeTokenDetails = void 0;
 const puppeteer_1 = __importDefault(require("puppeteer"));
+const path_1 = __importDefault(require("path"));
+const chromePath = path_1.default.join(__dirname, '../../chrome/chrome'); // Adjust if needed
 const scrapeTokenDetails = async (page, contract) => {
     console.log("scraping token details:", contract);
     try {
         // Configure Puppeteer to run without sandbox
         if (!page) {
             const browser = await puppeteer_1.default.launch({
-                headless: true
+                executablePath: chromePath, // Explicitly specify the Chrome path
+                headless: true,
+                args: ['--no-sandbox', '--disable-setuid-sandbox'],
             });
             page = await browser.newPage();
         }
